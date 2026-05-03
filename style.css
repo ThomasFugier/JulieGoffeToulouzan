@@ -1619,17 +1619,23 @@ a.contact-row:hover {
   }
 
   .hero-shape-one {
-    width: 92vw;
-    height: 92vw;
-    right: -54vw;
-    top: 110px;
+    width: 82vw;
+    height: 82vw;
+    right: -62vw;
+    top: 172px;
+    opacity: 0.58;
   }
 
   .hero-shape-two {
     width: 78vw;
     height: 78vw;
-    left: -48vw;
-    bottom: 12vw;
+    left: -56vw;
+    bottom: 5vw;
+    opacity: 0.72;
+  }
+
+  .hero-shape-three {
+    display: none;
   }
 
   h1 {
@@ -1800,9 +1806,10 @@ a.contact-row:hover {
   }
 
   h1 {
-    max-width: 10.6em;
-    font-size: 1.98rem;
-    line-height: 1.02;
+    max-width: 9.7em;
+    font-size: 1.92rem;
+    line-height: 1.06;
+    text-wrap: balance;
   }
 
   h2 {
@@ -1834,30 +1841,66 @@ a.contact-row:hover {
     font-size: 0.7rem;
   }
 
+  .mobile-break {
+    display: none;
+  }
+
   .graphic-stage {
-    min-height: min(680px, calc(100svh - 58px));
+    min-height: auto;
   }
 
   .hero-inner {
-    min-height: min(680px, calc(100svh - 58px));
-    padding: 38px 0 214px;
+    min-height: 0;
+    display: grid;
+    align-items: stretch;
+    padding: 42px 0 54px;
   }
 
   .hero-copy {
+    display: grid;
+    justify-items: center;
+    width: 100%;
     max-width: 100%;
+    text-align: center;
+  }
+
+  .hero-copy h1 {
+    order: 1;
+  }
+
+  .hero-copy .eyebrow {
+    order: 2;
+    max-width: 28ch;
+    margin-top: 18px;
+    margin-right: auto;
+    margin-bottom: 10px;
+    margin-left: auto;
+  }
+
+  .trust-line {
+    order: 3;
+    margin-right: auto;
+    margin-bottom: 0;
+    margin-left: auto;
   }
 
   .hero-subtitle {
-    max-width: 29ch;
+    order: 4;
+    max-width: 31ch;
+    margin-right: auto;
+    margin-left: auto;
     margin-top: 18px;
     font-size: 0.96rem;
     line-height: 1.56;
   }
 
   .hero-actions {
+    order: 5;
     display: grid;
     gap: 10px;
-    width: min(100%, 320px);
+    width: min(100%, 310px);
+    margin-right: auto;
+    margin-left: auto;
     margin-top: 24px;
   }
 
@@ -1869,22 +1912,7 @@ a.contact-row:hover {
   }
 
   .hero-art {
-    right: -100px;
-    bottom: -18px;
-    width: 390px;
-    min-height: 238px;
-    opacity: 0.58;
-  }
-
-  .paper-stack {
-    height: 234px;
-    transform: translateY(var(--scroll-y)) scale(0.7);
-  }
-
-  .mini-folder {
-    right: 88px;
-    bottom: 10px;
-    transform: rotate(-3deg) scale(0.9);
+    display: none;
   }
 
   .problem-section {
@@ -2123,6 +2151,15 @@ a.contact-row:hover {
   .site-footer {
     padding-bottom: 112px;
   }
+
+  .footer-inner {
+    justify-items: center;
+    text-align: center;
+  }
+
+  .footer-links {
+    justify-content: center;
+  }
 }
 
 @media (max-width: 379px) {
@@ -2131,7 +2168,7 @@ a.contact-row:hover {
   }
 
   h1 {
-    font-size: 1.92rem;
+    font-size: 1.78rem;
   }
 
   h2 {
@@ -2144,12 +2181,7 @@ a.contact-row:hover {
   }
 
   .hero-inner {
-    padding-bottom: 206px;
-  }
-
-  .hero-art {
-    right: -116px;
-    width: 370px;
+    padding: 38px 0 48px;
   }
 
   .service-slip,
