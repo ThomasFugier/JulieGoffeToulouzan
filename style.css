@@ -1264,11 +1264,29 @@ a.contact-row:hover {
   border: 0;
 }
 
+.contact-form .button:disabled {
+  cursor: wait;
+  opacity: 0.7;
+}
+
 .form-note {
   margin: 0;
   color: var(--muted);
   font-size: 0.84rem;
+  font-weight: 700;
   text-align: center;
+}
+
+.form-note[data-status="pending"] {
+  color: var(--ink);
+}
+
+.form-note[data-status="success"] {
+  color: #247957;
+}
+
+.form-note[data-status="error"] {
+  color: #b54545;
 }
 
 .site-footer {

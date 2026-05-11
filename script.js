@@ -37,21 +37,71 @@ updateScrollDetails();
 window.addEventListener("scroll", updateScrollDetails, { passive: true });
 
 if (contactForm) {
-  contactForm.addEventListener("submit", (event) => {
-    if (!contactForm.checkValidity()) return;
+  const submitButton = contactForm.querySelector("[data-submit-button]");
+  const statusMessage = contactForm.querySelector("[data-form-status]");
+  const defaultButtonLabel = submitButton?.textContent.trim() || "Envoyer ma demande";
+  const formspreeEndpoint = contactForm.action;
+  const hasPlaceholderEndpoint = /VOTRE_ID_FORMSPREE|YOUR_FORM_ID|\{form_id\}/i.test(
+    formspreeEndpoint
+  );
 
+  const updateStatus = (message, state = "idle") => {
+    if (!statusMessage) return;
+
+    statusMessage.textContent = message;
+    statusMessage.dataset.status = state;
+  };
+
+  contactForm.addEventListener("submit", async (event) => {
     event.preventDefault();
 
-    const formData = new FormData(contactForm);
-    const name = formData.get("name")?.toString().trim() || "Non renseigné";
-    const email = formData.get("email")?.toString().trim() || "Non renseigné";
-    const message = formData.get("message")?.toString().trim() || "";
+    if (!contactForm.reportValidity()) return;
 
-    const subject = encodeURIComponent("Demande de devis administratif");
-    const body = encodeURIComponent(
-      `Bonjour Julie,\n\n${message}\n\nNom : ${name}\nEmail : ${email}`
-    );
+    if (hasPlaceholderEndpoint) {
+      updateStatus("Ajoutez votre endpoint Formspree dans l'attribut action du formulaire.", "error");
+      return;
+    }
 
-    window.location.href = `mailto:juliegoffetoulouzan@gmail.com?subject=${subject}&body=${body}`;
+    contactForm.setAttribute("aria-busy", "true");
+    contactForm.classList.add("is-sending");
+    if (submitButton) {
+      submitButton.disabled = true;
+      submitButton.textContent = "Envoi en cours...";
+    }
+    updateStatus("Envoi de votre message...", "pending");
+
+    try {
+      const response = await fetch(formspreeEndpoint, {
+        method: "POST",
+        body: new FormData(contactForm),
+        headers: {
+          Accept: "application/json",
+        },
+      });
+
+      if (!response.ok) {
+        const payload = await response.json().catch(() => null);
+        const errorMessage =
+          payload?.errors?.map((error) => error.message).join(" ") ||
+          "Le message n'a pas pu être envoyé. Vous pouvez aussi me contacter par email.";
+
+        throw new Error(errorMessage);
+      }
+
+      contactForm.reset();
+      updateStatus("Merci, votre message a bien été envoyé.", "success");
+    } catch (error) {
+      updateStatus(
+        error.message || "Le message n'a pas pu être envoyé. Vous pouvez aussi me contacter par email.",
+        "error"
+      );
+    } finally {
+      contactForm.removeAttribute("aria-busy");
+      contactForm.classList.remove("is-sending");
+      if (submitButton) {
+        submitButton.disabled = false;
+        submitButton.textContent = defaultButtonLabel;
+      }
+    }
   });
 }

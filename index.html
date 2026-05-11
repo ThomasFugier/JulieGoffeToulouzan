@@ -332,12 +332,18 @@
           </div>
 
           <form
+            id="contact-form"
             class="contact-form reveal"
-            action="mailto:juliegoffetoulouzan@gmail.com"
-            method="post"
-            enctype="text/plain"
+            action="https://formspree.io/f/mbdwqgdv"
+            method="POST"
             data-contact-form
           >
+            <input
+              type="hidden"
+              name="_subject"
+              value="Nouvelle demande depuis le site Julie Goffe Toulouzan"
+            />
+
             <label for="name">Nom</label>
             <input id="name" name="name" type="text" autocomplete="name" required />
 
@@ -353,8 +359,12 @@
               required
             ></textarea>
 
-            <button class="button button-primary" type="submit">Envoyer ma demande</button>
-            <p class="form-note">Envoi via votre application email pour le moment.</p>
+            <button class="button button-primary" type="submit" data-submit-button>
+              Envoyer ma demande
+            </button>
+            <p class="form-note" data-form-status role="status" aria-live="polite">
+              Remplissez le formulaire, je vous réponds rapidement.
+            </p>
           </form>
         </div>
       </section>
